@@ -60,10 +60,10 @@ export default async function StoryPage({ params }: Params) {
           <div className="sec-head"><div><h2>More rescue stories</h2></div></div>
           <div className="cards2">
             {others.map((o) => (
-              <Link key={o.slug} href={`/impact/${o.slug}`} className="card" style={{ textDecoration: 'none', color: 'inherit' }}>
+              <Link key={o.slug} href={`/impact/${o.slug}`} className="card">
                 <h3>{`${o.name}'s story`}</h3>
                 <p>{o.summary}</p>
-                <span className="link" style={{ alignSelf: 'start' }}>Read the story</span>
+                <span className="link">Read the story</span>
               </Link>
             ))}
           </div>

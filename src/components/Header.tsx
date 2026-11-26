@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import Photo from './Photo';
+import Brand from './Brand';
 
 const NAV = [
   { href: '/', label: 'Home', mobile: 'Home' },
@@ -42,7 +42,7 @@ export default function Header() {
       <header className="site">
         <div className="wrap">
           <Link className="brand" href="/" aria-label="Pet Shelter NG home">
-            <Photo k="logo" alt="Pet Shelter NG" priority sizes="80px" />
+            <Brand />
           </Link>
           <nav className="main" aria-label="Main">
             {NAV.map((n) => (
@@ -67,8 +67,8 @@ export default function Header() {
       {open && (
         <div className="drawer" role="dialog" aria-modal="true" aria-label="Menu">
           <div className="drawer-top">
-            <Photo k="logo" alt="Pet Shelter NG" sizes="80px" />
-            <button className="menu-btn" style={{ display: 'flex', margin: 0 }} aria-label="Close menu" autoFocus onClick={() => setOpen(false)}>
+            <Brand />
+            <button className="menu-btn" aria-label="Close menu" autoFocus onClick={() => setOpen(false)}>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
                 <path d="M6 6l12 12M18 6L6 18" />
               </svg>

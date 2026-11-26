@@ -24,7 +24,7 @@ export default function Page() {
 
         <div className="section bg-sand">
           <div className="wrap">
-            <div className="sec-head"><div><h2>How fostering works</h2></div></div>
+            <div className="sec-head"><div className="copy"><h2>How fostering works</h2></div></div>
             <ol className="steps">
               <li><h3>Apply</h3><p>Tell us about your home, routine and the animals you can care for.</p></li>
               <li><h3>Home visit</h3><p>A short visit to make sure your space is safe and ready.</p></li>
@@ -35,8 +35,8 @@ export default function Page() {
         </div>
 
         <div className="section">
-          <div className="wrap split" style={{ alignItems: "start" }}>
-            <div>
+          <div className="wrap split top">
+            <div className="copy">
               <h2>Who we need most</h2>
               <ul className="check">
                 <li><span><b>Puppy and kitten fosters,</b> for young animals who need round-the-clock care.</span></li>
@@ -44,7 +44,7 @@ export default function Page() {
                 <li><span><b>Calm homes</b> for shy or anxious animals learning to trust people.</span></li>
                 <li><span><b>Emergency fosters</b> who can take an animal at short notice.</span></li>
               </ul>
-              <Photo k="care" style={{ width: "100%", aspectRatio: "16/10", objectFit: "cover", objectPosition: "center 40%", borderRadius: "var(--r)", marginTop: "32px" }} alt="A hand gently resting on a dog's neck" />
+              <Photo k="care" className="media pos-40" alt="A hand gently resting on a dog's neck" />
             </div>
             <FormShell kind="foster" className="form">
               <h3>Foster application</h3>

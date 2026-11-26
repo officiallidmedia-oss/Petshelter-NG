@@ -1,12 +1,17 @@
 import { Kpis, PageHead, Panel, Table } from '@/components/admin/ui';
 import StatusSelect from '@/components/admin/StatusSelect';
 import { STATUS_OPTIONS, countStatus, field, fmtDate, getSubmissions, refOf, statusOf } from '@/lib/admin-queries';
+import { getAnimals } from '@/lib/data';
 
 export const metadata = { title: 'Applications' };
 export const dynamic = 'force-dynamic';
 
 export default async function Applications() {
-  const rows = await getSubmissions(['adoption', 'foster']);
+  const [rows, animals] = await Promise.all([getSubmissions(['adoption', 'foster']), getAnimals()]);
+  const animalLabel = (slug: string) => {
+    const animal = animals.find((x) => x.slug === slug);
+    return animal ? `${animal.name} (${animal.id})` : slug;
+  };
   return (
     <>
       <PageHead title="Applications" sub="Adoption and foster applications from the website." />
@@ -18,7 +23,7 @@ export default async function Applications() {
               <td>{refOf(a)}</td>
               <td>{a.kind === 'foster' ? 'Foster' : 'Adoption'}</td>
               <td><b>{a.name}</b><br /><small>{a.email}</small></td>
-              <td>{field(a, 'animal') || (a.kind === 'foster' ? 'Any' : '—')}</td>
+              <td>{field(a, 'animal') ? animalLabel(field(a, 'animal')) : a.kind === 'foster' ? 'Any' : '—'}</td>
               <td>{field(a, 'area')}</td>
               <td>{fmtDate(a.createdAt)}</td>
               <td><StatusSelect id={a.id} value={statusOf(a)} options={STATUS_OPTIONS[a.kind]} /></td>

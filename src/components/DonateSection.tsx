@@ -23,7 +23,7 @@ export default function DonateSection({ initialFor }: { initialFor?: string }) {
   const [purpose, setPurpose] = useState(initialFor && PURPOSES.includes(initialFor) ? initialFor : PURPOSES[0]);
 
   return (
-    <div className="wrap split" style={{ alignItems: 'start', gap: 56 }}>
+    <div className="wrap split top">
       <div className="form" id="donate-box" ref={box}>
         <h3>Make a donation</h3>
         <div className="freq" role="group" aria-label="Frequency">
@@ -82,14 +82,14 @@ export default function DonateSection({ initialFor }: { initialFor?: string }) {
             Give through our GoFundMe
           </button>
         )}
-        <p className="muted" style={{ fontSize: '.85rem' }}>
+        <p className="muted note">
           Payments will be processed securely by a payment provider such as Paystack or Flutterwave, chosen at the build stage.
         </p>
       </div>
 
-      <div>
-        <h2 style={{ fontSize: '1.8rem' }}>Current shelter needs</h2>
-        <p className="muted" style={{ margin: '10px 0 22px' }}>Pick a need to support it directly.</p>
+      <div className="copy">
+        <h2 className="h-sub">Current shelter needs</h2>
+        <p className="muted">Pick a need to support it directly.</p>
         <div className="needs">
           {NEEDS.map((n) => (
             <div className="need" key={n.title}>
@@ -115,7 +115,7 @@ export default function DonateSection({ initialFor }: { initialFor?: string }) {
             </div>
           ))}
         </div>
-        <h3 style={{ margin: '36px 0 12px' }}>Bank transfer</h3>
+        <h3>Bank transfer</h3>
         <div className="bank">
           <b>Pet Shelter NG</b>
           <span>Bank: [Bank name]</span>

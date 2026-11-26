@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, type CSSProperties, type FormEvent, type ReactNode } from 'react';
+import type { FormResponse } from '@/lib/forms';
 import { useToast } from './Toast';
 
 export const FORM_OK: Record<string, [string, string]> = {
@@ -13,16 +14,27 @@ export const FORM_OK: Record<string, [string, string]> = {
   contact: ['Message sent', "Thanks for getting in touch. We'll reply to your email soon."],
 };
 
+type ApiReply = FormResponse;
+
 type Props = { kind: string; className?: string; style?: CSSProperties; children: ReactNode };
 
 /**
  * Wraps every public form: checks required fields, posts to /api/forms/[kind],
- * then swaps the form for a confirmation message.
+ * then swaps the form for a confirmation message. API validation errors are
+ * shown on the matching fields, using the shared FormResponse contract.
  */
 export default function FormShell({ kind, className = 'form', style, children }: Props) {
   const toast = useToast();
   const [done, setDone] = useState(false);
+  const [ref, setRef] = useState('');
   const [sending, setSending] = useState(false);
+
+  function markField(form: HTMLFormElement, name: string) {
+    form.querySelectorAll<HTMLElement>(`[name="${name}"]`).forEach((el) => {
+      el.style.borderColor = '#B3261E';
+      el.setAttribute('aria-invalid', 'true');
+    });
+  }
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -35,7 +47,7 @@ export default function FormShell({ kind, className = 'form', style, children }:
     });
     if (bad.length) {
       toast('Please complete the highlighted fields.');
-      bad.forEach((el) => (el.style.borderColor = '#B3261E'));
+      bad.forEach((el) => markField(form, el.name));
       bad[0].focus();
       return;
     }
@@ -43,7 +55,19 @@ export default function FormShell({ kind, className = 'form', style, children }:
     setSending(true);
     try {
       const res = await fetch(`/api/forms/${kind}`, { method: 'POST', body: new FormData(form) });
-      if (!res.ok) throw new Error('Request failed');
+      const reply = (await res.json().catch(() => null)) as ApiReply | null;
+
+      if (!res.ok || !reply || !reply.ok) {
+        const failure = reply && !reply.ok ? reply : null;
+        const fields = failure?.fields ?? {};
+        Object.keys(fields).forEach((name) => markField(form, name));
+        const first = Object.keys(fields)[0];
+        if (first) form.querySelector<HTMLElement>(`[name="${first}"]`)?.focus();
+        toast(failure?.error ?? 'Something went wrong. Please try again, or message us on WhatsApp.');
+        return;
+      }
+
+      setRef(reply.ref ?? '');
       setDone(true);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } catch {
@@ -64,6 +88,7 @@ export default function FormShell({ kind, className = 'form', style, children }:
         </span>
         <h3>{title}</h3>
         <p>{text}</p>
+        {ref && <p className="muted">Reference: {ref}</p>}
       </div>
     );
   }
@@ -78,8 +103,13 @@ export default function FormShell({ kind, className = 'form', style, children }:
       onInput={(e) => {
         const t = e.target as HTMLElement;
         t.style.borderColor = '';
+        t.removeAttribute('aria-invalid');
       }}
     >
+      <div className="sr" aria-hidden="true">
+        <label htmlFor={`hp-${kind}`}>Website</label>
+        <input id={`hp-${kind}`} name="website" type="text" tabIndex={-1} autoComplete="off" />
+      </div>
       {children}
     </form>
   );

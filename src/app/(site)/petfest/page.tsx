@@ -13,15 +13,15 @@ export default function Page() {
               <div>
                 <p className="crumb"><Link href="/">Home</Link> / PetFest Abuja</p>
                 <div className="wordmark">PetFest<span>Abuja</span></div>
-                <p className="lede" style={{ marginTop: "24px" }}>Abuja&apos;s biggest celebration of pets and the people who love them, organised by Pet Shelter NG.</p>
+                <p className="lede">Abuja&apos;s biggest celebration of pets and the people who love them, organised by Pet Shelter NG.</p>
                 <div className="pf-facts"><span>2026 edition: Saturday 14th November</span><span>Jabi Lake Mall, Abuja</span></div>
-                <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}><Link className="btn btn-dark" href="/petfest#pf-get">Get involved in 2027</Link><Link className="btn btn-line" href="/petfest#pf-gallery" style={{ color: "var(--choc)", boxShadow: "inset 0 0 0 2px var(--choc)" }}>See 2026 highlights</Link></div>
+                <div className="btn-row"><Link className="btn btn-dark" href="/petfest#pf-get">Get involved in 2027</Link><Link className="btn btn-line" href="/petfest#pf-gallery">See 2026 highlights</Link></div>
               </div>
-              <Photo k="runway" style={{ objectPosition: "center 30%" }} alt="The Pet Pageant red carpet at PetFest Abuja 2026, Jabi Lake Mall" />
+              <Photo k="runway" className="pos-30" alt="The Pet Pageant red carpet at PetFest Abuja 2026, Jabi Lake Mall" />
             </div>
           </div>
 
-          <div className="section" style={{ paddingTop: "24px" }}>
+          <div className="section flush-top">
             <div className="wrap">
               <div className="sec-head"><div><h2>What happens at PetFest</h2></div></div>
               <div className="cards3">
@@ -32,20 +32,20 @@ export default function Page() {
             </div>
           </div>
 
-          <div className="section" id="pf-gallery" style={{ paddingTop: "24px" }}>
+          <div className="section flush-top" id="pf-gallery">
             <div className="wrap">
               <div className="sec-head"><div><h2>PetFest Abuja 2026</h2><p className="muted">The first edition, at Jabi Lake Mall on 14th November 2026.</p></div></div>
               <div className="gallery">
                 <Photo k="pom" alt="A white Pomeranian held by smiling attendees at PetFest Abuja 2026" />
-                <Photo k="cat" style={{ objectPosition: "center 35%" }} alt="A guest holding her cat, dressed in a checked bow" />
-                <Photo k="frenchie" style={{ objectPosition: "center 40%" }} alt="A grinning French bulldog on a lead" />
-                <Photo k="whitecat" style={{ objectPosition: "center 30%" }} alt="A pet owner with her white cat, pointing at the stage" />
-                <Photo k="tunnel" style={{ objectPosition: "center 40%" }} alt="A German Shepherd running through an agility tunnel" />
+                <Photo k="cat" className="pos-35" alt="A guest holding her cat, dressed in a checked bow" />
+                <Photo k="frenchie" className="pos-40" alt="A grinning French bulldog on a lead" />
+                <Photo k="whitecat" className="pos-30" alt="A pet owner with her white cat, pointing at the stage" />
+                <Photo k="tunnel" className="pos-40" alt="A German Shepherd running through an agility tunnel" />
               </div>
             </div>
           </div>
 
-          <div className="section" id="pf-get" style={{ paddingTop: "24px" }}>
+          <div className="section flush-top" id="pf-get">
             <div className="wrap">
               <div className="sec-head"><div><h2>PetFest Abuja 2027</h2><p className="muted">Date and venue to be announced. Get your tickets, book a stand or partner with us.</p></div></div>
               <PetFestTabs />

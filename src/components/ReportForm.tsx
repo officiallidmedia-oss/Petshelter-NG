@@ -39,7 +39,7 @@ export default function ReportForm() {
       <div className="field">
         <label htmlFor="re-loc">Location</label>
         <input id="re-loc" name="location" required placeholder="Street, area and nearby landmark" value={loc} onChange={(e) => setLoc(e.target.value)} />
-        <button type="button" className="link" style={{ justifySelf: 'start', fontSize: '.88rem', marginTop: 4 }} onClick={useMyLocation}>
+        <button type="button" className="link link-sm self-start" onClick={useMyLocation}>
           Use my current location
         </button>
       </div>

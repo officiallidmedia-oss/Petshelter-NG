@@ -19,6 +19,7 @@ export const animals = pgTable('animals', {
   story: text('story').notNull().default(''),
   c: text('c').notNull().default('c1'),
   img: text('img'),
+  imgFileId: text('img_file_id'), // ImageKit file id, so the photo can be deleted
   createdAt: timestamp('created_at').notNull().defaultNow(),
 });
 
@@ -79,4 +80,13 @@ export const medicalRecords = pgTable('medical_records', {
   notes: text('notes'),
   vet: text('vet'),
   recordedOn: timestamp('recorded_on').notNull().defaultNow(),
+});
+
+/** Staff accounts. Passwords are stored as bcrypt hashes only. */
+export const adminUsers = pgTable('admin_users', {
+  id: serial('id').primaryKey(),
+  username: text('username').notNull().unique(),
+  passwordHash: text('password_hash').notNull(),
+  role: text('role').notNull().default('admin'),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
 });

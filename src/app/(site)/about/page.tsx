@@ -14,17 +14,17 @@ export default function Page() {
 
         <div className="section">
           <div className="wrap split">
-            <div>
+            <div className="copy">
               <h2>Our story</h2>
-              <p className="lede" style={{ marginTop: "16px" }}>Pet Shelter NG began with a simple belief: that no animal in Abuja should be left on the street, sick or alone.</p>
-              <p className="muted" style={{ marginTop: "16px" }}>What started as a few people taking in strays has grown into a shelter initiative with volunteers, foster families and partners across the city. We rescue animals from the street, nurse them back to health and match them with families who will love them for life.</p>
-              <p className="muted" style={{ marginTop: "16px" }}>We promote responsible pet ownership, animal welfare and a community where every pet has a chance at a better life. We are also the organisers of PetFest Abuja, which brings the city&apos;s pet community together.</p>
+              <p className="lede">Pet Shelter NG began with a simple belief: that no animal in Abuja should be left on the street, sick or alone.</p>
+              <p className="muted">What started as a few people taking in strays has grown into a shelter initiative with volunteers, foster families and partners across the city. We rescue animals from the street, nurse them back to health and match them with families who will love them for life.</p>
+              <p className="muted">We promote responsible pet ownership, animal welfare and a community where every pet has a chance at a better life. We are also the organisers of PetFest Abuja, which brings the city&apos;s pet community together.</p>
             </div>
-            <div style={{ display: "grid", gap: "16px" }}>
-            <Photo k="cat" style={{ width: "100%", aspectRatio: "16/10", objectFit: "cover", objectPosition: "center 30%", borderRadius: "var(--r)" }} alt="A PetFest guest cuddling her cat" />
-            <div className="card" style={{ padding: "32px 32px", background: "var(--yellow-soft)", border: "0" }}>
+            <div className="stack">
+            <Photo k="cat" className="media pos-30" alt="A PetFest guest cuddling her cat" />
+            <div className="card tint-yellow">
               <p className="quote">&quot;To protect vulnerable animals, promote responsible pet ownership and create lasting homes for animals in need.&quot;</p>
-              <p style={{ marginTop: "12px", fontWeight: "800", color: "var(--ink)" }}>Our mission</p>
+              <p className="cite">Our mission</p>
             </div>
             </div>
           </div>
@@ -32,7 +32,7 @@ export default function Page() {
 
         <div className="section bg-sand">
           <div className="wrap">
-            <div className="sec-head"><div><h2>What we work towards</h2><p>Our animal welfare objectives guide every rescue, adoption and campaign.</p></div></div>
+            <div className="sec-head"><div className="copy"><h2>What we work towards</h2><p>Our animal welfare objectives guide every rescue, adoption and campaign.</p></div></div>
             <div className="cards3">
               <div className="card"><span className="ico"><svg viewBox="0 0 32 32"><path d="M16 27s-10-6.2-10-13a5.5 5.5 0 0 1 10-3.2A5.5 5.5 0 0 1 26 14c0 6.8-10 13-10 13z" /></svg></span><h3>Rescue</h3><p>Respond to reports of abandoned, injured and vulnerable animals across Abuja.</p></div>
               <div className="card"><span className="ico"><svg viewBox="0 0 32 32"><path d="M12 5h8v7h7v8h-7v7h-8v-7H5v-8h7z" /></svg></span><h3>Rehabilitate</h3><p>Provide vet care, vaccination, sterilisation and the time each animal needs to recover.</p></div>
@@ -46,7 +46,7 @@ export default function Page() {
 
         <div className="section">
           <div className="wrap">
-            <div className="sec-head"><div><h2>Meet the team</h2><p>The people who keep the shelter running, every single day.</p></div><Link className="btn btn-line btn-sm" href="/get-involved">Join us as a volunteer</Link></div>
+            <div className="sec-head"><div className="copy"><h2>Meet the team</h2><p>The people who keep the shelter running, every single day.</p></div><Link className="btn btn-line btn-sm" href="/get-involved">Join us as a volunteer</Link></div>
             <div className="team">
         {TEAM.map(([name, role]) => (
           <div className="person" key={role}>

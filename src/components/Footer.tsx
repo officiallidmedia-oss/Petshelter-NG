@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { SITE } from '@/lib/config';
+import Brand from './Brand';
 import WaButton from './WaButton';
 
 export default function Footer() {
@@ -8,17 +9,10 @@ export default function Footer() {
       <div className="wrap">
         <div className="f-grid">
           <div>
-            <div className="f-brand">
-              <svg viewBox="0 0 1095 850" aria-hidden="true">
-                <use href="#mark" fill="#E2870A" />
-              </svg>
-              <b>
-                PET SHELTER
-                <br />
-                <span>NG</span>
-              </b>
-            </div>
-            <p style={{ maxWidth: 300 }}>Rescuing, rehabilitating and rehoming abandoned and vulnerable animals in Abuja.</p>
+            <Link className="f-brand" href="/" aria-label="Pet Shelter NG home">
+              <Brand tone="light" />
+            </Link>
+            <p className="f-about">Rescuing, rehabilitating and rehoming abandoned and vulnerable animals in Abuja.</p>
             <div className="socials">
               <a href={SITE.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram">
                 <svg viewBox="0 0 24 24">
@@ -30,8 +24,8 @@ export default function Footer() {
                   <path d="M16.6 2h-3.3v13.3a2.9 2.9 0 1 1-2-2.8V9.2a6.2 6.2 0 1 0 5.3 6.1V8.6a7.9 7.9 0 0 0 4.4 1.4V6.7a4.5 4.5 0 0 1-4.4-4.7z" />
                 </svg>
               </a>
-              <WaButton aria-label="WhatsApp" style={{ width: 44, height: 44, borderRadius: '50%', border: '1px solid #4A423B', background: 'none', display: 'grid', placeItems: 'center', cursor: 'pointer' }}>
-                <svg viewBox="0 0 24 24" style={{ width: 20, height: 20, fill: '#D9D0C1' }}>
+              <WaButton aria-label="WhatsApp">
+                <svg viewBox="0 0 24 24">
                   <use href="#wa" />
                 </svg>
               </WaButton>

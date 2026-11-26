@@ -23,7 +23,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ a
 
         <div className="section bg-sand">
           <div className="wrap">
-            <div className="sec-head"><div><h2>We stay in touch after adoption</h2><p>Every adopter gets scheduled check-ins, and can send us photos and health updates at any time.</p></div></div>
+            <div className="sec-head"><div className="copy"><h2>We stay in touch after adoption</h2><p>Every adopter gets scheduled check-ins, and can send us photos and health updates at any time.</p></div></div>
             <div className="timeline">
               <div className="tl"><i>7</i><div><b>7 days</b><span>Settling-in call</span></div></div>
               <div className="tl"><i>30</i><div><b>30 days</b><span>Health and behaviour check</span></div></div>
@@ -35,10 +35,10 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ a
         </div>
 
         <div className="section" id="apply">
-          <div className="wrap split" style={{ alignItems: "start" }}>
-            <div>
+          <div className="wrap split top">
+            <div className="copy">
               <h2>Apply to adopt</h2>
-              <p className="lede" style={{ marginTop: "16px" }}>Tell us about you and your home. We read every application and reply within a few days.</p>
+              <p className="lede">Tell us about you and your home. We read every application and reply within a few days.</p>
               <ul className="check">
                 <li><span><b>Be 18 or older</b> and able to show a valid ID.</span></li>
                 <li><span><b>Have your landlord&apos;s permission</b> if you rent.</span></li>
@@ -71,7 +71,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ a
 
         <div className="section bg-sand tight">
           <div className="wrap narrow">
-            <h2 style={{ marginBottom: "24px" }}>Adoption questions</h2>
+            <div className="sec-head"><h2>Adoption questions</h2></div>
             <div className="faq">
               <details><summary>Is there an adoption fee?</summary><p>A small adoption fee helps cover vaccinations, sterilisation and vet care. We&apos;ll share the amount when we review your application.</p></details>
               <details><summary>How long does the process take?</summary><p>Most adoptions take one to two weeks from application to welcome home, including a meet-and-greet and a home check.</p></details>

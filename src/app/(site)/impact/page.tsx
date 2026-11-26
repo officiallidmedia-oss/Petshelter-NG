@@ -31,7 +31,7 @@ export default async function Page() {
         <div className="section">
           <div className="wrap">
             <div className="sec-head"><div><h2>Rescue stories</h2><p>From the street, to our care, to a home of their own.</p></div></div>
-            <div style={{ display: 'grid', gap: 20 }}>
+            <div className="stack-lg">
         {stories.map((s) => {
           const a = animals.find((x) => x.name === s.name);
           return (
@@ -48,7 +48,7 @@ export default async function Page() {
                 </div>
                 <h3>{`${s.name}'s story`}</h3>
                 <p>{s.summary}</p>
-                <Link className="link" href={`/impact/${s.slug}`} style={{ alignSelf: 'start' }}>{`Read ${s.name}'s story`}</Link>
+                <Link className="link" href={`/impact/${s.slug}`}>{`Read ${s.name}'s story`}</Link>
               </div>
             </article>
           );
@@ -59,7 +59,7 @@ export default async function Page() {
 
         <div className="section bg-sand">
           <AdoptionShowcase title="Happy in their new homes" blurb={"Recent adoptions from Pet Shelter NG, with their new families."}>
-      <p style={{ marginTop: "28px" }}><Link className="btn btn-dark btn-sm" href="/adopt">Adopt a pet</Link></p>
+      <p className="link-row"><Link className="btn btn-dark" href="/adopt">Adopt a pet</Link></p>
       </AdoptionShowcase></div>
 
         <div className="section">

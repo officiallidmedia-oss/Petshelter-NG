@@ -1,29 +1,42 @@
 'use server';
 
+import bcrypt from 'bcryptjs';
+import { eq, sql } from 'drizzle-orm';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { SESSION_COOKIE, authConfigured, sessionToken } from '@/lib/auth';
+import { db, schema } from '@/db';
+import { SESSION_COOKIE, SESSION_HOURS, authConfigured, createSessionToken } from '@/lib/auth';
+
+// Real hash of a random string: compared against when the username is unknown, so timing reveals nothing.
+const DUMMY_HASH = bcrypt.hashSync(crypto.randomUUID(), 12);
 
 export type LoginState = { error?: string };
 
 export async function login(_prev: LoginState, formData: FormData): Promise<LoginState> {
-  if (!authConfigured()) {
-    return { error: 'Admin sign-in is not set up. Add ADMIN_PASSWORD and SESSION_SECRET to .env.local.' };
-  }
+  if (!authConfigured()) return { error: 'Sign-in is not set up yet: SESSION_SECRET is missing.' };
+  const username = String(formData.get('username') ?? '').trim();
   const password = String(formData.get('password') ?? '');
-  if (password !== process.env.ADMIN_PASSWORD) return { error: 'That password is not right. Try again.' };
+  if (!username || !password) return { error: 'Enter your username and password.' };
 
-  (await cookies()).set(SESSION_COOKIE, await sessionToken(), {
+  const [user] = await db
+    .select()
+    .from(schema.adminUsers)
+    .where(eq(sql`lower(${schema.adminUsers.username})`, username.toLowerCase()))
+    .limit(1);
+  const ok = await bcrypt.compare(password, user?.passwordHash ?? DUMMY_HASH);
+  if (!user || !ok) return { error: 'That username or password is not right.' };
+
+  (await cookies()).set(SESSION_COOKIE, await createSessionToken(user.username), {
     httpOnly: true,
     sameSite: 'lax',
     secure: process.env.NODE_ENV === 'production',
-    path: '/admin',
-    maxAge: 60 * 60 * 8,
+    path: '/',
+    maxAge: SESSION_HOURS * 3600,
   });
   redirect('/admin');
 }
 
 export async function logout() {
-  (await cookies()).delete({ name: SESSION_COOKIE, path: '/admin' });
+  (await cookies()).delete({ name: SESSION_COOKIE, path: '/' });
   redirect('/admin/login');
 }

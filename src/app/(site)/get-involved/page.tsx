@@ -22,10 +22,10 @@ export default function Page() {
         </div>
 
         <div className="section bg-sand" id="volunteer">
-          <div className="wrap split" style={{ alignItems: "start" }}>
-            <div>
+          <div className="wrap split top">
+            <div className="copy">
               <h2>Volunteer with us</h2>
-              <p className="lede" style={{ marginTop: "16px" }}>No experience needed, just a love for animals and a few hours to spare.</p>
+              <p className="lede">No experience needed, just a love for animals and a few hours to spare.</p>
               <ul className="check">
                 <li><span><b>Animal care:</b> feeding, cleaning, grooming and socialising.</span></li>
                 <li><span><b>Dog walking</b> on weekday mornings and weekends.</span></li>
@@ -46,11 +46,11 @@ export default function Page() {
         </div>
 
         <div className="section" id="partner">
-          <div className="wrap split" style={{ alignItems: "start" }}>
-            <div>
+          <div className="wrap split top">
+            <div className="copy">
               <h2>Partnerships and sponsorship</h2>
-              <p className="lede" style={{ marginTop: "16px" }}>We work with vets, pet businesses, schools and companies who share our love for animals.</p>
-              <div className="cards2" style={{ marginTop: "28px" }}>
+              <p className="lede">We work with vets, pet businesses, schools and companies who share our love for animals.</p>
+              <div className="cards2">
                 <div className="card"><h4>Vet partners</h4><p>Discounted treatment, vaccination and sterilisation for shelter animals.</p></div>
                 <div className="card"><h4>Corporate sponsors</h4><p>Staff volunteering days, campaign sponsorship and PetFest branding.</p></div>
                 <div className="card"><h4>Pet businesses</h4><p>Donate food and supplies, or host adoption days in your store.</p></div>

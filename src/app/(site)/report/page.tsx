@@ -12,14 +12,14 @@ export default function Page() {
           <svg className="art" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M16 4.5 29 27H3z" /><path d="M16 12.5v6.5" /><circle cx="16" cy="22.6" r="1.3" fill="currentColor" /></svg>
         </div></div>
         <div className="section">
-          <div className="wrap split" style={{ alignItems: "start" }}>
+          <div className="wrap split top">
             <div>
-              <div className="card" style={{ background: "var(--orange-soft)", border: "0" }}>
+              <div className="card tint-orange">
                 <h3>In an emergency</h3>
                 <p>If an animal is badly injured or in immediate danger, message us on WhatsApp straight away, as well as filling in this form.</p>
-                <WaButton className="btn btn-wa" style={{ alignSelf: "start", marginTop: "6px" }}><svg viewBox="0 0 24 24" fill="currentColor"><use href="#wa" /></svg>Message us on WhatsApp</WaButton>
+                <WaButton className="btn btn-wa self-start"><svg viewBox="0 0 24 24" fill="currentColor"><use href="#wa" /></svg>Message us on WhatsApp</WaButton>
               </div>
-              <h3 style={{ margin: "36px 0 12px" }}>Until we arrive</h3>
+              <h3>Until we arrive</h3>
               <ul className="check">
                 <li><span><b>Keep a safe distance</b> from frightened or injured animals.</span></li>
                 <li><span><b>Offer water</b> if it&apos;s safe to do so.</span></li>

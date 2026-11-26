@@ -57,7 +57,7 @@ export default async function AnimalPage({ params }: Params) {
                 <div><small>Size</small><b>{a.size}</b></div>
               </div>
               <p className="lede">{a.story}</p>
-              <h4 style={{ marginTop: 6 }}>Health record</h4>
+              <h4>Health record</h4>
               <div className="med">
                 <Health ok={a.vax} label="Vaccinated" />
                 <Health ok={a.ster} label="Sterilised" />

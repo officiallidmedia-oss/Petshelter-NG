@@ -1,5 +1,6 @@
 import { desc, inArray } from 'drizzle-orm';
 import { db, schema } from '@/db';
+import { FORM_REF_PREFIX } from './forms';
 
 export type Submission = typeof schema.submissions.$inferSelect;
 
@@ -14,9 +15,7 @@ export const STATUS_OPTIONS: Record<string, string[]> = {
   contact: ['New', 'Closed'],
 };
 
-export const REF_PREFIX: Record<string, string> = {
-  adoption: 'AD', foster: 'FO', report: 'RP', volunteer: 'VO', vendor: 'VN', partner: 'PN', contact: 'CT',
-};
+export const REF_PREFIX: Record<string, string> = FORM_REF_PREFIX;
 
 export async function getSubmissions(kinds: string[]): Promise<Submission[]> {
   return db.select().from(schema.submissions).where(inArray(schema.submissions.kind, kinds)).orderBy(desc(schema.submissions.createdAt));

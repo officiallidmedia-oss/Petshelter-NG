@@ -37,7 +37,7 @@ export default function Page() {
               <div className="row2"><div className="field"><label htmlFor="co-name">Full name</label><input name="name" id="co-name" required autoComplete="name" /></div><div className="field"><label htmlFor="co-email">Email</label><input name="email" id="co-email" type="email" required autoComplete="email" /></div></div>
               <div className="row2"><div className="field"><label htmlFor="co-phone">Phone <span className="hint">(optional)</span></label><input name="phone" id="co-phone" type="tel" autoComplete="tel" /></div><div className="field"><label htmlFor="co-topic">Topic</label><select name="topic" id="co-topic" required><option value="">Choose a topic</option><option>Adoption</option><option>Fostering</option><option>Volunteering</option><option>Donations</option><option>PetFest</option><option>Partnerships</option><option>Something else</option></select></div></div>
               <div className="field"><label htmlFor="co-msg">Message</label><textarea name="message" id="co-msg" required></textarea></div>
-              <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}><button className="btn btn-dark" type="submit">Send message</button><WaButton className="btn btn-wa" type="button"><svg viewBox="0 0 24 24" fill="currentColor"><use href="#wa" /></svg>Chat on WhatsApp</WaButton></div>
+              <div className="btn-row"><button className="btn btn-dark" type="submit">Send message</button><WaButton className="btn btn-wa" type="button"><svg viewBox="0 0 24 24" fill="currentColor"><use href="#wa" /></svg>Chat on WhatsApp</WaButton></div>
             </FormShell>
           </div>
         </div>

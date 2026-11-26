@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { logout } from '@/app/admin/actions';
-import Photo from '@/components/Photo';
+import Brand from '@/components/Brand';
 import Icon from './icons';
 
 const LINKS = [
@@ -16,6 +16,7 @@ const LINKS = [
   { href: '/admin/donations', label: 'Donations', icon: 'donations' },
   { href: '/admin/petfest', label: 'PetFest', icon: 'petfest' },
   { href: '/admin/reports', label: 'Rescue reports', icon: 'reports' },
+  { href: '/admin/contact', label: 'Messages', icon: 'applications' },
 ];
 
 /** Fixed left pane. Stays in place while the page content scrolls. */
@@ -26,8 +27,8 @@ export default function AdminSidebar() {
   return (
     <aside className="adm-side" aria-label="Staff navigation">
       <Link href="/admin" className="adm-brand" aria-label="Staff portal home">
-        <Photo k="logo" alt="Pet Shelter NG" sizes="48px" />
-        <b>Staff portal</b>
+        <Brand tone="light" compact />
+        <small>Staff portal</small>
       </Link>
 
       <nav className="adm-nav">
@@ -50,7 +51,7 @@ export default function AdminSidebar() {
             Sign out
           </button>
         </form>
-        <span className="role">Signed in as Administrator. Staff and volunteers will see fewer sections.</span>
+        <span className="role">Signed in as Administrator.</span>
       </div>
     </aside>
   );

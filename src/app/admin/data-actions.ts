@@ -8,6 +8,7 @@ import { z } from 'zod';
 import { db, schema } from '@/db';
 import { SESSION_COOKIE, isValidSession } from '@/lib/auth';
 import { STATUS_OPTIONS } from '@/lib/admin-queries';
+import { deletePhoto, photoProblem, uploadPhoto } from '@/lib/imagekit';
 
 /** Server actions are public endpoints, so check the staff session in every one. */
 async function requireAdmin() {
@@ -42,7 +43,7 @@ function refreshAnimalPages(slug: string) {
 export async function saveAnimal(_prev: SaveState, formData: FormData): Promise<SaveState> {
   await requireAdmin();
 
-  const parsed = AnimalInput.safeParse(Object.fromEntries(formData));
+  const parsed = AnimalInput.safeParse(Object.fromEntries([...formData].filter(([, v]) => typeof v === 'string')));
   if (!parsed.success) return { error: parsed.error.issues[0]?.message ?? 'Please check the form.' };
   const v = parsed.data;
   const flags = {
@@ -51,14 +52,37 @@ export async function saveAnimal(_prev: SaveState, formData: FormData): Promise<
     dew: formData.get('dew') === 'on',
     chip: formData.get('chip') === 'on',
   };
+  const good = formData.getAll('good').map(String).filter((g) => ['kids', 'dogs', 'cats'].includes(g));
+
+  const photo = formData.get('photo');
+  const file = photo instanceof File && photo.size > 0 ? photo : null;
+  const problem = photoProblem(file);
+  if (problem) return { error: problem };
+  const removePhoto = formData.get('removePhoto') === 'on';
 
   const id = String(formData.get('id') ?? '');
-  if (id) {
-    const [existing] = await db.select().from(schema.animals).where(eq(schema.animals.id, id)).limit(1);
-    if (!existing) return { error: 'That animal no longer exists.' };
-    await db.update(schema.animals).set({ ...v, ...flags, ageGroup: ageGroupOf(v.age) }).where(eq(schema.animals.id, id));
+  const existing = id ? (await db.select().from(schema.animals).where(eq(schema.animals.id, id)).limit(1))[0] : undefined;
+  if (id && !existing) return { error: 'That animal no longer exists.' };
+
+  // Upload first, so a failed upload changes nothing.
+  let img: { img: string | null; imgFileId: string | null } | undefined;
+  if (file) {
+    try {
+      const up = await uploadPhoto(file, `${slugify(v.name)}-${Date.now()}`);
+      img = { img: up.url, imgFileId: up.fileId };
+    } catch (e) {
+      console.error(e);
+      return { error: 'The photo could not be uploaded. Please try again.' };
+    }
+  } else if (removePhoto) {
+    img = { img: null, imgFileId: null };
+  }
+
+  if (existing) {
+    await db.update(schema.animals).set({ ...v, ...flags, good, ageGroup: ageGroupOf(v.age), ...(img ?? {}) }).where(eq(schema.animals.id, existing.id));
+    if (img) await deletePhoto(existing.imgFileId);
     refreshAnimalPages(existing.slug);
-    revalidatePath('/admin/animals');
+    revalidatePath('/admin', 'layout');
     return { ok: `${v.name} saved.` };
   }
 
@@ -73,14 +97,34 @@ export async function saveAnimal(_prev: SaveState, formData: FormData): Promise<
   await db.insert(schema.animals).values({
     ...v,
     ...flags,
+    ...(img ?? {}),
     id: `PSNG-${String(next).padStart(4, '0')}`,
     slug,
     ageGroup: ageGroupOf(v.age),
-    good: [],
+    good,
     c: (['c1', 'c2', 'c3', 'c4'] as const)[next % 4],
   });
   refreshAnimalPages(slug);
-  redirect('/admin/animals');
+  revalidatePath('/admin', 'layout');
+  redirect('/admin/animals?saved=1');
+}
+
+export async function deleteAnimal(formData: FormData) {
+  await requireAdmin();
+  const id = String(formData.get('id') ?? '');
+  const [a] = await db.select().from(schema.animals).where(eq(schema.animals.id, id)).limit(1);
+  if (!a) redirect('/admin/animals');
+
+  // Keep history: an animal with medical or follow-up records can't be deleted, only marked adopted.
+  const [med] = await db.select({ id: schema.medicalRecords.id }).from(schema.medicalRecords).where(eq(schema.medicalRecords.animalId, id)).limit(1);
+  const [fu] = await db.select({ id: schema.followUps.id }).from(schema.followUps).where(eq(schema.followUps.animalId, id)).limit(1);
+  if (med || fu) redirect(`/admin/animals/${a.slug}?blocked=1`);
+
+  await db.delete(schema.animals).where(eq(schema.animals.id, id));
+  await deletePhoto(a.imgFileId);
+  refreshAnimalPages(a.slug);
+  revalidatePath('/admin', 'layout');
+  redirect('/admin/animals?deleted=1');
 }
 
 export async function setSubmissionStatus(formData: FormData) {
